@@ -27,15 +27,8 @@ ENV CC arm-linux-gnueabihf-gcc
 RUN git clone https://github.com/ethcore/parity && \
 	cd parity && \
 	git checkout master && \
-	wget https://github.com/nix-rust/nix/archive/v0.5.0.tar.gz && \
-	tar -xf v0.5.0.tar.gz && \
-	rm -rf v0.5.0.tar.gz && \
-	wget https://github.com/thkaw/mio/archive/v0.5.x.tar.gz && \
-	tar -xf v0.5.x.tar.gz && \
-	rm -rf v0.5.x.tar.gz && \
 	mkdir -p .cargo && \
-  	echo 'paths = ["nix-0.5.0","mio-0.5.x"]\n\
-	[target.arm-unknown-linux-gnueabihf]\n\
+  	echo '[target.arm-unknown-linux-gnueabihf]\n\
 	linker = "arm-linux-gnueabihf-gcc"\n'\
 	>>.cargo/config && \
 	cat .cargo/config && \
