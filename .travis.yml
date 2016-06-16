@@ -1,6 +1,8 @@
 sudo: false
 services:
  - docker
+before_install:
+ - sudo apt-get update
 #language: ruby
 script:
 - docker pull ubuntu/trusty
