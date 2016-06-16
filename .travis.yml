@@ -1,7 +1,6 @@
-sudo: false
+sudo: required
 services:
  - docker
-
 script:
  #- docker pull ubuntu/trusty
  - docker build -t ethcore:parity-arm .
