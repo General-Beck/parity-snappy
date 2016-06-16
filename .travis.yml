@@ -3,7 +3,7 @@ services:
  - docker
 
 script:
- - docker pull ubuntu/trusty
+ #- docker pull ubuntu/trusty
  - docker build -t ethcore:parity-arm .
  - docker run -d --name parity-arm ethcore:parity-arm
  - docker start parity-arm
