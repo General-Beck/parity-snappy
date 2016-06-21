@@ -1,6 +1,6 @@
 sudo: reguired
 dist: trusty
-
+os: linux
 script:
  - docker build -t ethcore:parity-arm .
  - docker run -d --name parity-arm ethcore:parity-arm
