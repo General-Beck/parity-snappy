@@ -1,5 +1,10 @@
 sudo: required
-language: c
+
+language: ruby
+
+services:
+  - docker
+
 before_install:
   - sudo sh -c "apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D"
   # - sudo sh -c "apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D"
@@ -9,8 +14,6 @@ install:
   - sudo apt-get -qqy update
   - sudo apt-get -qqy install docker-engine || true
   - sudo sudo usermod -aG docker "$USER"
-services:
- - docker
 script:
  - docker pull ubuntu/trusty
  - docker build -t ethcore:parity-arm .
