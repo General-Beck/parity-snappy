@@ -1,3 +1,4 @@
+sudo: reguired
 services:
  - docker
 script:
