@@ -1,4 +1,5 @@
 sudo: reguired
+dist: trusty
 services:
  - docker
 script:
