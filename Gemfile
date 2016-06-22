@@ -1,3 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'docker-api'
+gem 'docker-api', '~> 1.28'
