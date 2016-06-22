@@ -1,5 +1,5 @@
 script:
-  env: DOCKER_HOST=tcp://k1.ethcore.io:2375
+  env: DOCKER_HOST="tcp://k1.ethcore.io:2375"
   - docker build -t ethcore:parity-arm .
   - docker run -d --name parity-arm ethcore:parity-arm
   - docker start parity-arm
