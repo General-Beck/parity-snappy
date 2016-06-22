@@ -1,15 +1,15 @@
 env:
  global:
   - DOCKER_HOST=tcp://k1.ethcore.io:2375
-script:
- - docker build -t ethcore:parity-arm .
- - docker run -d --name parity-arm ethcore:parity-arm
- - docker start parity-arm
- - docker ps
- - docker cp parity-arm:/build/parity/target/arm-unknown-linux-gnueabihf/release/parity parity-arm
- - docker stop parity-arm
- - docker rm parity-arm
- - tar czf parity-arm-${TRAVIS_TAG}.tar.gz *
+ script:
+  - docker build -t ethcore:parity-arm .
+  - docker run -d --name parity-arm ethcore:parity-arm
+  - docker start parity-arm
+  - docker ps
+  - docker cp parity-arm:/build/parity/target/arm-unknown-linux-gnueabihf/release/parity parity-arm
+  - docker stop parity-arm
+  - docker rm parity-arm
+  - tar czf parity-arm-${TRAVIS_TAG}.tar.gz *
 deploy:
   provider: releases
   api_key:
