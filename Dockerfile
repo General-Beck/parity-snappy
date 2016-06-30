@@ -1,44 +1,35 @@
 FROM ubuntu:14.04
 WORKDIR /build
 # install tools and dependencies
-RUN apt-get -y update && \
-	apt-get install -y --force-yes --no-install-recommends \
-	curl git make g++ gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf \
-	libc6-dev-armhf-cross wget file ca-certificates \
-	binutils-arm-linux-gnueabihf \
-	&& \
-    apt-get clean
+RUN apt-get update && \
+        apt-get install -y \
+        g++ \
+        curl \
+        git \
+        file \
+        binutils
 
-# install multirust
-RUN curl -sf https://raw.githubusercontent.com/brson/multirust/master/blastoff.sh | sh -s -- --yes
-ENV RUST_TARGETS="arm-unknown-linux-gnueabihf"
-# multirust override beta
-RUN multirust override beta
+# install rustup
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
-# multirust add arm--linux-gnuabhf toolchain
-RUN multirust add-target beta arm-unknown-linux-gnueabihf
+# rustup directory
+ENV PATH /root/.cargo/bin:$PATH
 
 # show backtraces
 ENV RUST_BACKTRACE 1
-# set compilers
-ENV CXX arm-linux-gnueabihf-g++ 
-ENV CC arm-linux-gnueabihf-gcc 
+
+# show tools
+RUN rustc -vV && \
+cargo -V && \
+gcc -v &&\
+g++ -v
+
 # build parity
 RUN git clone https://github.com/ethcore/parity && \
-	cd parity && \
-	git checkout master && \
-	mkdir -p .cargo && \
-  	echo '[target.arm-unknown-linux-gnueabihf]\n\
-	linker = "arm-linux-gnueabihf-gcc"\n'\
-	>>.cargo/config && \
-	cat .cargo/config && \
-	rustc -vV && \
-	cargo -V && \
-	cargo update && \
-	cargo build --target arm-unknown-linux-gnueabihf --release --verbose && \
-	ls /build/parity/target/arm-unknown-linux-gnueabihf/release/parity &&	\
-	file /build/parity/target/arm-unknown-linux-gnueabihf/release/parity && \
-	/usr/bin/arm-linux-gnueabihf-strip /build/parity/target/arm-unknown-linux-gnueabihf/release/parity
-RUN file /build/parity/target/arm-unknown-linux-gnueabihf/release/parity
-
-
+        cd parity && \
+        git checkout master && \
+        git pull && \
+        cargo build --release --verbose && \
+        ls /build/parity/target/release/parity && \
+        strip /build/parity/target/release/parity
+RUN file /build/parity/target/release/parity
