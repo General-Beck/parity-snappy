@@ -1,9 +1,8 @@
 sudo: required
 language: generic
-before_install:
+script:
 - sudo docker build -t ethcore:parity-arm .
 - sudo docker run -d --name parity-arm ethcore:parity-arm
-script:
 - sudo docker start parity-arm
 - sudo docker ps
 - sudo docker cp parity-arm:/build/parity/target/arm-unknown-linux-gnueabihf/release/parity
